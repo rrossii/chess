@@ -7,14 +7,12 @@ pygame.display.set_caption('chess')
 myIcon = pygame.image.load("C:\\Users\\annro\Downloads\\ferz2.bmp")
 pygame.display.set_icon(myIcon)
 
-BROWN = (90, 50, 20)
-GREEN = (0, 255, 0)
-FPS = 30
+PURPLE = (153, 102, 204)
+GREEN = (208, 240, 192)
+FPS = 60
 clock = pygame.time.Clock()
 
-
-
-
+pygame.mouse.set_visible(False)
 
 
 W = 600
@@ -35,29 +33,36 @@ def change_pos(speed):
         if event.key == pygame.K_UP:
             y -= speed
 
-right = left = False
+start = None
+
+
 while 1:
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             exit()
-        elif event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_LEFT:
-                left = True
-            if event.key  == pygame.K_RIGHT:
-                right = True
-        elif event.type == pygame.KEYUP:
-            if event.key in pygame.K_LEFT or  pygame.K_RIGHT:
-                right = left = False
-    if left:
-        x -=speed
-    if right:
-        x +=speed
+
+    screen.fill(PURPLE)
+    pos = pygame.mouse.get_pos()
+    if pygame.mouse.get_focused():
+
+        pygame.draw.circle(screen, GREEN, pos, 5)
+
+    pressed = pygame.mouse.get_pressed()
+
+    if pressed[0]:
+
+        if start is None:
+            start = pos
+        width = pos[0] - start[0]
+        height = pos[1] - start[1]
+
+        
+        pygame.draw.rect(screen, GREEN, (start[0], start[1], width, height))
+    else:
+        start = None
 
 
-
-    screen.fill(BROWN)
-    pygame.draw.rect(screen, GREEN, (x, y, 10, 20))
     pygame.display.update()
     clock.tick(FPS)
 
