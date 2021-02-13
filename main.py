@@ -9,17 +9,35 @@ pygame.display.set_icon(myIcon)
 
 PURPLE = (153, 102, 204)
 GREEN = (208, 240, 192)
+BLUE = (91, 146, 229)
+PINK = (223, 115, 255)
+
 FPS = 60
 clock = pygame.time.Clock()
-
-pygame.mouse.set_visible(False)
-
 
 W = 600
 H = 400
 x = W//4
 y = H //2
 speed = 10
+
+
+
+
+surf = pygame.Surface((300, 300))
+surf.fill(BLUE)
+pygame.draw.circle(surf, GREEN, (x, y), 20)
+
+surf_alpha = pygame.Surface((W, 200))
+pygame.draw.rect(surf_alpha, PINK, (0, 0, W, 100))
+surf_alpha.set_alpha(100)
+
+surf.blit(surf_alpha, (100, 50))
+screen.blit(surf, (230, 150))
+
+pygame.display.update()
+
+
 
 def change_pos(speed):
     global x, y
@@ -34,8 +52,6 @@ def change_pos(speed):
             y -= speed
 
 start = None
-
-
 while 1:
 
     for event in pygame.event.get():
@@ -57,13 +73,13 @@ while 1:
         width = pos[0] - start[0]
         height = pos[1] - start[1]
 
-        
+
         pygame.draw.rect(screen, GREEN, (start[0], start[1], width, height))
     else:
         start = None
 
 
-    pygame.display.update()
+
     clock.tick(FPS)
 
 
